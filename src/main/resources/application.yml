@@ -1,0 +1,40 @@
+app:
+  delimiter: '=========================='
+  version: '@project.version@'
+
+spring:
+  application:
+    name: keeper-security-service
+  profiles:
+    active: dev
+#    active: prod
+
+  messages:
+    always-use-message-format: false
+    basename: messages/messages
+    encoding: UTF-8
+    fallback-to-system-locale: true
+  main:
+    web-application-type:
+
+#Open-api
+springdoc:
+  api-docs:
+    path: /security-docs
+
+#Prometheus
+management:
+  endpoint:
+    info:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: info, health, metrics, prometheus, loggers
+      base-path: /api/security/info
+  metrics:
+    enable:
+      jvm: true
+
+
+
