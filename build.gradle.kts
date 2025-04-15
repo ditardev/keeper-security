@@ -31,7 +31,7 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt-api:0.12.6")
 
 	//Eureka
-	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.2.1")
+	//implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.2.1")
 
 	//Postgres
 	implementation("org.postgresql:postgresql:42.7.5")
