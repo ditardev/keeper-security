@@ -1,21 +1,53 @@
-app:
-  delimiter: '=========================='
-  version: '@project.version@'
-
+#Spring Security Properties
 spring:
-  application:
-    name: keeper-security-service
   profiles:
     active: dev
 #    active: prod
+
+  application:
+    name: ${server.appName}
+
+  datasource:
+    url: jdbc:postgresql://${server.ip}:${server.db.port}/${server.db.name}?currentSchema=${server.db.schema}
+    username: ${server.db.user}
+    password: ${server.db.password}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  properties:
+    hibernate:
+      default_schema: ${server.db.schema}
+  flyway:
+    url: jdbc:postgresql://${server.ip}:${server.db.port}/${server.db.name}
+    user: ${server.db.user}
+    password: ${server.db.password}
+    default-schema: ${server.db.schema}
+  instance:
+    status-page-url-path: api/auth/actuator/info
+    health-check-url-path: api/auth/actuator/health
+  main:
+    allow-bean-definition-overriding: true
 
   messages:
     always-use-message-format: false
     basename: messages/messages
     encoding: UTF-8
     fallback-to-system-locale: true
-  main:
-    web-application-type:
+
+#Eureka
+eureka:
+  client:
+    service-url:
+      default-zone: http://${server.ip}:8761/eureka
+      instance-id: "${spring.application.name}:${spring.profiles.active}:${random.uuid}"
+
+#Logging
+logging:
+  level:
+    root: ${server.logging.level}
+  file:
+    name: ${server.logging.filePath}
 
 #Open-api
 springdoc:

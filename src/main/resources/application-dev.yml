@@ -1,52 +1,19 @@
 server:
+  appName: keeper-security-service
   port: 8090
   ip: localhost
-
-#Logging
-logging:
-  level:
-    root: info
-  file:
-    name: ../logs/gateway/gateway.log
-
-spring:
-  datasource:
-    url: jdbc:postgresql://${server.ip}:5432/postgres?currentSchema=auth
-    username: postgres
-    password: postgrespw
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-  properties:
-    hibernate:
-      default_schema: auth
-  flyway:
-    url: jdbc:postgresql://${server.ip}:5432/postgres
+  db:
+    port: 5432
+    name: postgres
+    schema: auth
     user: postgres
     password: postgrespw
-    default-schema: auth
-#  security:
-#    oauth2:
-#      resource-server:
-#        jwt:
-#          issuer-uri: http://${server.ip}:28080/realms/i113_realm
-  instance:
-    status-page-url-path: api/auth/actuator/info
-    health-check-url-path: api/auth/actuator/health
-  main:
-    allow-bean-definition-overriding: true
-
-eureka:
-  client:
-    service-url:
-      default-zone: http://${server.ip}:8761/eureka
-
-
-#    instance-id: "${spring.application.name}:${random.uuid}"
-jwt:
-  header: Authorization
-  secret: proselyte
-  #expiration: 18000 #5h 300m
-  expiration: 900 #15m
+  logging:
+    level: info
+    filePath: ../logs/gateway/gateway.log
+  jwt:
+    header: Authorization
+    secret: proselyte
+    #expiration: 18000 #5h 300m
+    expiration: 900 #15m
 
