@@ -40,7 +40,11 @@ eureka:
   client:
     service-url:
       default-zone: http://${server.ip}:8761/eureka
-      instance-id: "${spring.application.name}:${spring.profiles.active}:${random.uuid}"
+  instance:
+    statusPageUrlPath: security/info
+    healthCheckUrlPath: security/health
+    instance-id: "${spring.application.name}:${spring.profiles.active}:${random.uuid}"
+    #http://localhost:8080/gateway/info/health
 
 #Logging
 logging:

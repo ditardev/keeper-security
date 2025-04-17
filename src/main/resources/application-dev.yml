@@ -2,6 +2,10 @@ server:
   appName: keeper-security-service
   port: 8090
   ip: localhost
+  endpoint:
+    main: api/auth
+    user: api/auth/user
+    data: api/auth/data
   db:
     port: 5432
     name: postgres
@@ -10,7 +14,7 @@ server:
     password: postgrespw
   logging:
     level: info
-    filePath: ../logs/gateway/gateway.log
+    filePath: ../logs/security/security.log
   jwt:
     header: Authorization
     secret: proselyte
