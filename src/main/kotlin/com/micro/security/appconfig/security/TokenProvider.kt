@@ -6,12 +6,14 @@ import io.jsonwebtoken.Claims
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.MalformedJwtException
+import io.jsonwebtoken.io.Decoders
+import io.jsonwebtoken.security.Keys
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import org.springframework.util.StringUtils
 import java.util.*
-import javax.crypto.spec.SecretKeySpec
+import javax.crypto.SecretKey
 
 @Component
 class TokenProvider(
@@ -25,15 +27,13 @@ class TokenProvider(
     private val expiration: Long
 ) {
 
-    private val signingKey: SecretKeySpec
-        get() {
-            val keyBytes: ByteArray = Base64.getDecoder().decode(secret)
-            return SecretKeySpec(keyBytes, 0, keyBytes.size, "HmacSHA256")
-        }
+    private fun getSignInKey(): SecretKey {
+        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret))
+    }
 
     private fun extractAllClaims(token: String): Claims {
         return Jwts.parser()
-            .verifyWith(signingKey)
+            .verifyWith(getSignInKey())
             .build()
             .parseSignedClaims(token)
             .payload;
@@ -52,12 +52,11 @@ class TokenProvider(
         claims: Claims,
         tokenValidity: Long
     ): String {
-        val now = Date()
         return Jwts.builder()
             .claims(claims)
-            .issuedAt(now)
-            .expiration(Date(now.time + tokenValidity))
-            .signWith(signingKey)
+            .issuedAt(Date(System.currentTimeMillis()))
+            .expiration(Date(System.currentTimeMillis() + tokenValidity))
+            .signWith(getSignInKey())
             .compact()
     }
 
@@ -84,7 +83,7 @@ class TokenProvider(
     fun validateToken(token: String): Boolean {
         try {
             Jwts.parser()
-                .verifyWith(signingKey)
+                .verifyWith(getSignInKey())
                 .build()
                 .parseSignedClaims(token)
                 .payload
@@ -109,7 +108,7 @@ class TokenProvider(
 
     fun getClaimsFromToken(token: String): Claims? {
         return Jwts.parser()
-            .verifyWith(signingKey)
+            .verifyWith(getSignInKey())
             .build()
             .parseSignedClaims(token)
             ?.payload

@@ -1,6 +1,6 @@
 package com.micro.security.model.dto
 
-data class AuthDto(
+data class SignInDto(
     val username: String,
     val password: String
 )
