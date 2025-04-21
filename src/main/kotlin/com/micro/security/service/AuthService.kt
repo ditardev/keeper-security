@@ -2,6 +2,8 @@ package com.micro.security.service
 
 import com.hadiyarajesh.spring_security_demo.app.exception.ResourceNotFoundException
 import com.micro.security.appconfig.exception.ResourceAlreadyExistException
+import com.micro.security.appconfig.exception.ResourceBannedException
+import com.micro.security.appconfig.exception.ResourceNotConfirmedException
 import com.micro.security.appconfig.security.TokenProvider
 import com.micro.security.model.Role
 import com.micro.security.model.Status
@@ -16,7 +18,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import java.sql.Timestamp
@@ -30,6 +31,15 @@ class AuthService(
 ) {
     fun signIn(signInDto: SignInDto?): String {
 
+        val userEntity = userRepository.findUserByUsername(signInDto?.username)
+            ?: throw ResourceNotFoundException("User with username ${signInDto?.username} not found")
+
+        when (userEntity.status) {
+            Status.BANNED -> throw ResourceBannedException("User with username ${signInDto?.username} was blocked")
+            Status.NEW -> throw ResourceNotConfirmedException("User with username ${signInDto?.username} not Confirmed")
+            else -> {}
+        }
+
         val authentication = authenticationManager.authenticate(
             UsernamePasswordAuthenticationToken(
                 signInDto?.username,
@@ -37,10 +47,6 @@ class AuthService(
             )
         )
         SecurityContextHolder.getContext().authentication = authentication
-
-        val userEntity = userRepository.findUserByUsername(signInDto?.username)
-            ?: throw ResourceNotFoundException("User with username ${signInDto?.username} not found")
-
 
         return getToken(userEntity)
     }
@@ -54,8 +60,6 @@ class AuthService(
         userRepository.save(
             UserEntity(
                 username = signUpDto?.username,
-                firstname = signUpDto?.firstName,
-                lastname = signUpDto?.lastName,
                 email = signUpDto?.email,
                 password = passwordEncoder.encode(signUpDto?.password),
                 role = Role.USER,
@@ -69,17 +73,14 @@ class AuthService(
     }
 
     fun signOut(authDto: AuthDto?): ResponseEntity<*>? {
-        var userEntity =
-            userRepository.findUserByUsername(authDto?.username) ?: throw UsernameNotFoundException("User not found")
+
+        val userEntity = userRepository.findUserByUsername(authDto?.username)
+            ?: throw ResourceNotFoundException("Username ${authDto?.username} not found")
+
+        userRepository.delete(userEntity)
+
         return ResponseEntity.ok(HttpStatus.OK)
     }
-
-    fun refresh(authDto: AuthDto?): ResponseEntity<*>? {
-        var userEntity =
-            userRepository.findUserByUsername(authDto?.username) ?: throw UsernameNotFoundException("User not found")
-        return ResponseEntity.ok(HttpStatus.OK)
-    }
-
 
     fun getToken(userEntity: UserEntity): String {
         return tokenProvider.generateToken(userEntity)

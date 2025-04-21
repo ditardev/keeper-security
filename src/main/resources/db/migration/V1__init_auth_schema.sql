@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE IF NOT EXISTS users
 (
-    id        SERIAL PRIMARY KEY,
+    id        BIGSERIAL PRIMARY KEY,
     uuid      uuid         NOT NULL DEFAULT gen_random_uuid(),
     username  VARCHAR(50)  NOT NULL UNIQUE,
     firstname VARCHAR(50)  NOT NULL,

@@ -48,8 +48,8 @@ data class UserEntity(
     var uuid: UUID? = UUID.randomUUID(),
 
     var username: String? = null,
-    var firstname: String? = null,
-    var lastname: String? = null,
+    var firstname: String? = "",
+    var lastname: String? = "",
     var email: String? = null,
     var password: String? = null,
 
