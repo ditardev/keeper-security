@@ -1,0 +1,25 @@
+SET search_path TO auth;
+
+insert into users(id, uuid, username, firstname, lastname, email, password, role, status, created, updated)
+values (1,
+        '8a8ac7b4-6e1f-4677-ba83-e4acb8559a7b',
+        'master',
+        'Дмитрий',
+        'Мастерович',
+        'DitarRogozhnikov@gmail.com',
+        '$2a$10$16jdCAHJMDjSqGhHB7/vPOFCdVR/ogjF7xgmm1juh7CzJgtV8aImG',
+        'ADMIN',
+        'ACTIVE',
+        current_timestamp,
+        current_timestamp),
+       (2,
+        'bf5b1024-ca51-4744-9e61-0d2177ca4b80',
+        'exdes',
+        'Татьяна',
+        'Андройдовна',
+        'tanysha6@me.com',
+        '$2a$10$K2Bm5sDgAHcS9ql8vHC1m.l6eEhvHGkeCK0bqvReCwj0WsgQv8GfS',
+        'ADMIN',
+        'ACTIVE',
+        current_timestamp,
+        current_timestamp);
