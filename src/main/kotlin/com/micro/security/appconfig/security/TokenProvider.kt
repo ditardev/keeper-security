@@ -1,6 +1,8 @@
 package com.micro.security.appconfig.security
 
 import com.micro.security.appconfig.exception.InvalidJwtException
+import com.micro.security.appconfig.utility.Constant
+import com.micro.security.appconfig.utility.Messages
 import com.micro.security.model.entity.UserEntity
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.ExpiredJwtException
@@ -85,17 +87,17 @@ class TokenProvider(
                 .payload
             return true
         } catch (e: MalformedJwtException) {
-            throw InvalidJwtException("JWT token is malformed.")
+            throw InvalidJwtException(Messages.JWT_MALFORMED)
         } catch (e: ExpiredJwtException) {
-            throw InvalidJwtException("JWT token is expired.")
+            throw InvalidJwtException(Messages.JWT_EXPIRED)
         } catch (e: Exception) {
-            throw InvalidJwtException("JWT token validation failed.")
+            throw InvalidJwtException(Messages.JWT_VALIDATION_FAILED)
         }
     }
 
     fun getTokenFromHeader(request: HttpServletRequest): String? {
         val bearerToken = request.getHeader(header)
-        return if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+        return if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(Constant.BEARER)) {
             bearerToken.substring(7, bearerToken.length)
         } else {
             null

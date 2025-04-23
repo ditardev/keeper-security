@@ -1,6 +1,9 @@
 package com.micro.security.appconfig.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.micro.security.appconfig.utility.Constant
+import com.micro.security.appconfig.utility.Messages
+import com.micro.security.model.Role
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -32,8 +35,8 @@ open class SecurityConfig(
                 it
                     .requestMatchers(antMatcher("/**")).permitAll()
                     .requestMatchers(antMatcher("/api/auth/**")).permitAll()
-                    .requestMatchers(antMatcher("/api/auth/user/**")).hasRole("USER")
-                    .requestMatchers(antMatcher("/api/auth/admin/**")).hasRole("ADMIN")
+                    .requestMatchers(antMatcher("/api/auth/user/**")).hasRole(Role.USER.name)
+                    .requestMatchers(antMatcher("/api/auth/admin/**")).hasRole(Role.ADMIN.name)
                     .anyRequest().authenticated()
             }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
@@ -43,9 +46,9 @@ open class SecurityConfig(
             .exceptionHandling { configurer ->
                 configurer.authenticationEntryPoint { request, response, authException ->
                     val jsonResponse = mapOf(
-                        "status" to false,
-                        "message" to "Access denied",
-                        "timestamp" to LocalDateTime.now().toString()
+                        Constant.STATUS to false,
+                        Constant.MESSAGE to Messages.ACCESS_DENIED,
+                        Constant.TIMESTAMP to LocalDateTime.now().toString()
                     )
 
                     response.contentType = MediaType.APPLICATION_JSON_VALUE

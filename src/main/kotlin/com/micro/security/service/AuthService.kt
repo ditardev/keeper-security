@@ -5,6 +5,7 @@ import com.micro.security.appconfig.exception.ResourceAlreadyExistException
 import com.micro.security.appconfig.exception.ResourceBannedException
 import com.micro.security.appconfig.exception.ResourceNotConfirmedException
 import com.micro.security.appconfig.security.TokenProvider
+import com.micro.security.appconfig.utility.Messages
 import com.micro.security.model.Role
 import com.micro.security.model.Status
 import com.micro.security.model.dto.AuthDto
@@ -35,11 +36,11 @@ class AuthService(
     fun signIn(signInDto: SignInDto?): AuthDto {
 
         val userEntity = userRepository.findUserByUsername(signInDto?.username)
-            ?: throw ResourceNotFoundException("User with username ${signInDto?.username} not found")
+            ?: throw ResourceNotFoundException(Messages.USER_WITH_USERNAME + "${signInDto?.username}" + Messages.NOT_FOUND)
 
         when (userEntity.status) {
-            Status.BANNED -> throw ResourceBannedException("User with username ${signInDto?.username} was blocked")
-            Status.NEW -> throw ResourceNotConfirmedException("User with username ${signInDto?.username} not Confirmed")
+            Status.BANNED -> throw ResourceBannedException(Messages.USER_WITH_USERNAME + "${signInDto?.username}" + Messages.BANNED)
+            Status.NEW -> throw ResourceNotConfirmedException(Messages.USER_WITH_USERNAME + "${signInDto?.username}" + Messages.NOT_CONFIRMED)
             else -> {}
         }
 
@@ -57,10 +58,10 @@ class AuthService(
 
     fun signUp(signUpDto: SignUpDto?): ResponseEntity<*>? {
         if (userRepository.existsByUsername(signUpDto?.username)) {
-            throw ResourceAlreadyExistException("UserName ${signUpDto?.username} is already in use, please use different UserName.")
+            throw ResourceAlreadyExistException(Messages.USER_WITH_USERNAME + "${signUpDto?.username}" + Messages.USERNAME_IN_USE)
         }
         if (userRepository.existsByEmail(signUpDto?.email)) {
-            throw ResourceAlreadyExistException("Email ${signUpDto?.email} is already in use, please use different Email.")
+            throw ResourceAlreadyExistException(Messages.USER_WITH_USERNAME + "${signUpDto?.email}" + Messages.EMAIL_IN_USE)
         }
 
         userRepository.save(
@@ -81,7 +82,7 @@ class AuthService(
     fun signOut(userDto: UserDto?): ResponseEntity<*>? {
 
         val userEntity = userRepository.findUserByUsername(userDto?.username)
-            ?: throw ResourceNotFoundException("Username ${userDto?.username} not found")
+            ?: throw ResourceNotFoundException(Messages.USER_WITH_USERNAME + "${userDto?.username}" + Messages.NOT_FOUND)
 
         userRepository.delete(userEntity)
 

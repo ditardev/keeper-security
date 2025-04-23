@@ -1,5 +1,6 @@
 package com.micro.security.appconfig.security
 
+import com.micro.security.appconfig.utility.Constant
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -28,9 +29,9 @@ class SecurityFilter(
         }
 
         if (request.requestURI.equals("/refresh")) {
-            request.getAttribute("claims")
+            request.getAttribute(Constant.CLAIMS)
                 ?: request.setAttribute(
-                    "claims",
+                    Constant.CLAIMS,
                     tokenProvider.getClaimsFromToken(token!!)
                 )
         }

@@ -1,6 +1,7 @@
 package com.micro.security.controller
 
 import com.micro.security.appconfig.model.ApiResponse
+import com.micro.security.appconfig.utility.Constant
 import com.micro.security.model.dto.SignInDto
 import com.micro.security.model.dto.SignUpDto
 import com.micro.security.model.dto.UserDto
@@ -37,8 +38,8 @@ class AuthController(
 
     @GetMapping("/refresh")
     fun refresh(request: HttpServletRequest): ResponseEntity<ApiResponse.Success<Map<String, String>>> {
-        val claims = request.getAttribute("claims") as Claims
+        val claims = request.getAttribute(Constant.CLAIMS) as Claims
         val token = authService.getRefreshToken(claims = claims)
-        return ResponseEntity.ok(ApiResponse.Success(true, mapOf("token" to token)))
+        return ResponseEntity.ok(ApiResponse.Success(true, mapOf(Constant.TOKEN to token)))
     }
 }
