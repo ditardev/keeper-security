@@ -68,10 +68,6 @@ class TokenProvider(
             add("uuid", userEntity.uuid)
             add("role", userEntity.role)
             add("status", userEntity.status)
-            add("email", userEntity.email)
-            add("username", userEntity.username)
-            add("firstname", userEntity.firstname)
-            add("lastname", userEntity.lastname)
         }
         return generateTokenFromClaims(claims.build(), expiration)
     }

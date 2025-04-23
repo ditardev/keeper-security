@@ -1,9 +1,9 @@
 package com.micro.security.controller
 
 import com.micro.security.appconfig.model.ApiResponse
-import com.micro.security.model.dto.AuthDto
 import com.micro.security.model.dto.SignInDto
 import com.micro.security.model.dto.SignUpDto
+import com.micro.security.model.dto.UserDto
 import com.micro.security.service.AuthService
 import io.jsonwebtoken.Claims
 import jakarta.servlet.http.HttpServletRequest
@@ -30,7 +30,7 @@ class AuthController(
     }
 
     @PutMapping("/signOut")
-    fun signOut(@RequestBody request: AuthDto): ResponseEntity<*>? {
+    fun signOut(@RequestBody request: UserDto): ResponseEntity<*>? {
         authService.signOut(request);
         return ResponseEntity.ok(ApiResponse.Success(true, ""))
     }

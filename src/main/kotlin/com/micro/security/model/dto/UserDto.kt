@@ -11,14 +11,12 @@ import lombok.NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
-class UserDto {
-
-    private val uuid: String? = null
-    private val username: String? = null
-    private val firstname: String? = null
-    private val lastname: String? = null
-    private val email: String? = null
-    private val role: Role? = null
-    private val status: Status? = null
-
-}
+data class UserDto(
+    val uuid: String? = null,
+    val username: String? = null,
+    val firstname: String? = null,
+    val lastname: String? = null,
+    val email: String? = null,
+    val role: Role? = null,
+    val status: Status? = null
+) {}

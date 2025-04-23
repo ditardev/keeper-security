@@ -10,8 +10,10 @@ import com.micro.security.model.Status
 import com.micro.security.model.dto.AuthDto
 import com.micro.security.model.dto.SignInDto
 import com.micro.security.model.dto.SignUpDto
+import com.micro.security.model.dto.UserDto
 import com.micro.security.model.entity.UserEntity
 import com.micro.security.repository.UserRepository
+import com.micro.security.service.converter.UserConverter
 import io.jsonwebtoken.Claims
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -28,8 +30,9 @@ class AuthService(
     private val userRepository: UserRepository,
     private val tokenProvider: TokenProvider,
     private val passwordEncoder: PasswordEncoder,
+    private val userConverter: UserConverter
 ) {
-    fun signIn(signInDto: SignInDto?): String {
+    fun signIn(signInDto: SignInDto?): AuthDto {
 
         val userEntity = userRepository.findUserByUsername(signInDto?.username)
             ?: throw ResourceNotFoundException("User with username ${signInDto?.username} not found")
@@ -48,13 +51,16 @@ class AuthService(
         )
         SecurityContextHolder.getContext().authentication = authentication
 
-        return getToken(userEntity)
+        return AuthDto(getToken(userEntity), userConverter.convertToDto(userEntity))
     }
 
 
     fun signUp(signUpDto: SignUpDto?): ResponseEntity<*>? {
         if (userRepository.existsByUsername(signUpDto?.username)) {
-            throw ResourceAlreadyExistException("Email ${signUpDto?.email} is already in use, please use different email.")
+            throw ResourceAlreadyExistException("UserName ${signUpDto?.username} is already in use, please use different UserName.")
+        }
+        if (userRepository.existsByEmail(signUpDto?.email)) {
+            throw ResourceAlreadyExistException("Email ${signUpDto?.email} is already in use, please use different Email.")
         }
 
         userRepository.save(
@@ -72,10 +78,10 @@ class AuthService(
         return ResponseEntity.ok(HttpStatus.OK)
     }
 
-    fun signOut(authDto: AuthDto?): ResponseEntity<*>? {
+    fun signOut(userDto: UserDto?): ResponseEntity<*>? {
 
-        val userEntity = userRepository.findUserByUsername(authDto?.username)
-            ?: throw ResourceNotFoundException("Username ${authDto?.username} not found")
+        val userEntity = userRepository.findUserByUsername(userDto?.username)
+            ?: throw ResourceNotFoundException("Username ${userDto?.username} not found")
 
         userRepository.delete(userEntity)
 

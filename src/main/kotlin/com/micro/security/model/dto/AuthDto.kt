@@ -1,6 +1,7 @@
 package com.micro.security.model.dto
 
 data class AuthDto(
-    val username: String,
-    val password: String
-)
+    val token: String?=null,
+    val user: UserDto?=null
+) {
+}
