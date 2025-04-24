@@ -28,7 +28,20 @@ spring:
     health-check-url-path: api/auth/actuator/health
   main:
     allow-bean-definition-overriding: true
-
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${server.mail.username}
+    password: ${server.mail.password}
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        debug: true
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 #Eureka
 eureka:
   client:

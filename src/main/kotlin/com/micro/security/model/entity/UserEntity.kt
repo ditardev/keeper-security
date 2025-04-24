@@ -3,17 +3,9 @@ package com.micro.security.model.entity
 import com.micro.security.model.Role
 import com.micro.security.model.Status
 import jakarta.persistence.*
-import lombok.AllArgsConstructor
-import lombok.Builder
-import lombok.Data
-import lombok.NoArgsConstructor
 import java.sql.Timestamp
 import java.util.*
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-@Builder
 @Entity
 @Table(name = "users")
 data class UserEntity(

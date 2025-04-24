@@ -34,4 +34,12 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         )
     }
 
+    @ExceptionHandler(MessagingDataException::class)
+    fun handleInvalidJwtException(e: MessagingDataException): ResponseEntity<ApiResponse.Error> {
+        return ResponseEntity(
+            ApiResponse.Error(status = false, message = e.message),
+            e.httpStatus
+        )
+    }
+
 }

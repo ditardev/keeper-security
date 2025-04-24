@@ -20,3 +20,13 @@ CREATE TABLE IF NOT EXISTS users
     created   timestamp    NOT NULL DEFAULT current_timestamp,
     updated   timestamp    NOT NULL DEFAULT current_timestamp
 );
+
+CREATE TABLE IF NOT EXISTS recovery
+(
+    id      SERIAL PRIMARY KEY,
+    uuid    uuid        NOT NULL,
+    email   VARCHAR(50) NOT NULL UNIQUE,
+    code    VARCHAR(10) NOT NULL UNIQUE,
+    created timestamp   NOT NULL DEFAULT current_timestamp,
+    expired timestamp   NOT NULL DEFAULT current_timestamp
+);

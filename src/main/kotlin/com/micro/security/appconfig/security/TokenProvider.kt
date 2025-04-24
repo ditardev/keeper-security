@@ -25,7 +25,7 @@ class TokenProvider(
     @Value("\${server.jwt.header}")
     private val header: String? = null,
 
-    @Value("\${server.jwt.expiration}")
+    @Value("\${server.jwt.expiration_jwt}")
     private val expiration: Long
 ) {
 
