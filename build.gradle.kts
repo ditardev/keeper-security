@@ -30,6 +30,9 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web:3.4.4")
 	implementation("io.jsonwebtoken:jjwt-api:0.12.6")
 
+	//Mail
+	implementation("org.springframework.boot:spring-boot-starter-mail:3.4.4")
+
 	//Eureka
 	//implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.2.1")
 

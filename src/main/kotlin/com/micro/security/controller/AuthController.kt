@@ -8,12 +8,10 @@ import com.micro.security.model.dto.UserDto
 import com.micro.security.service.AuthService
 import io.jsonwebtoken.Claims
 import jakarta.servlet.http.HttpServletRequest
-import lombok.AllArgsConstructor
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("\${server.endpoint.main}")
 class AuthController(
     private val authService: AuthService,

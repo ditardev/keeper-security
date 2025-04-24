@@ -29,12 +29,6 @@ spring:
   main:
     allow-bean-definition-overriding: true
 
-  messages:
-    always-use-message-format: false
-    basename: messages/messages
-    encoding: UTF-8
-    fallback-to-system-locale: true
-
 #Eureka
 eureka:
   client:

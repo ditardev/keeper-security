@@ -16,31 +16,6 @@ import java.util.*
 @Builder
 @Entity
 @Table(name = "users")
-//class UserEntity {
-//
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    var id: Long? = null
-//
-//    var uuid: UUID? = UUID.randomUUID()
-//
-//    var username: String? = null
-//    var firstname: String? = null
-//    var lastname: String? = null
-//    var email: String? = null
-//    var password: String? = null
-//
-//    @Enumerated(EnumType.STRING)
-//    var role: Role? = null
-//
-//    @Enumerated(EnumType.STRING)
-//    var status: Status? = null
-//
-//    var created: Timestamp? = null
-//    var updated: Timestamp? = null
-//
-//}
-
 data class UserEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
