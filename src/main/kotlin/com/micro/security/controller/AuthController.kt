@@ -21,37 +21,37 @@ class AuthController(
 ) {
     @PostMapping("/signIn")
     fun signIn(@RequestBody request: SignInDto): ResponseEntity<*>? {
-        val data = authService.signIn(request);
+        val data = authService.signIn(request)
         return ResponseEntity.ok(ApiResponse.Success(true, data))
     }
 
     @PostMapping("/signUp")
     fun signUp(@RequestBody request: SignUpDto): ResponseEntity<*>? {
-        val data = authService.signUp(request);
+        val data = authService.signUp(request)
         return ResponseEntity.ok(ApiResponse.Success(true, data))
     }
 
     @PutMapping("/signOut")
     fun signOut(@RequestBody request: UserDto): ResponseEntity<*>? {
-        authService.signOut(request);
+        authService.signOut(request)
         return ResponseEntity.ok(ApiResponse.Success(true, ""))
     }
 
     @PostMapping("/signRestore")
     fun signRestore(@RequestBody request: RestoreDto): ResponseEntity<*>? {
-        val data = restoreService.signRestore(request);
+        val data = restoreService.signRestore(request)
         return ResponseEntity.ok(ApiResponse.Success(true, data))
     }
 
     @PostMapping("/verifyRestore")
     fun verifyRestore(@RequestBody request: RestoreDto): ResponseEntity<*>? {
-        val data = restoreService.verifyRestoreCode(request);
+        val data = restoreService.verifyRestoreCode(request)
         return ResponseEntity.ok(ApiResponse.Success(true, data))
     }
 
     @PostMapping("/passwordRestore")
     fun passwordRestore(@RequestBody request: RestoreDto): ResponseEntity<*>? {
-        val data = restoreService.passwordRestore(request);
+        val data = restoreService.passwordRestore(request)
         return ResponseEntity.ok(ApiResponse.Success(true, data))
     }
 

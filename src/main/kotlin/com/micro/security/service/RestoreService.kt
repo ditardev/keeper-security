@@ -1,10 +1,8 @@
 package com.micro.security.service
 
 import com.hadiyarajesh.spring_security_demo.app.exception.ResourceNotFoundException
-import com.micro.security.appconfig.exception.ResoucePasswordIdentical
 import com.micro.security.appconfig.exception.ResourceAlreadyExistException
 import com.micro.security.appconfig.exception.ResourceNotConfirmedException
-import com.micro.security.appconfig.utility.Constant
 import com.micro.security.appconfig.utility.Messages
 import com.micro.security.model.dto.RestoreDto
 import com.micro.security.model.entity.RestoreEntity
@@ -72,7 +70,7 @@ class RestoreService(
         return ResponseEntity.ok(HttpStatus.OK)
     }
 
-    fun passwordRestore(restoreDto: RestoreDto): ResponseEntity<*>{
+    fun passwordRestore(restoreDto: RestoreDto): ResponseEntity<*> {
         if (!restoreRepository.existsByEmail(restoreDto.email)) {
             throw ResourceNotFoundException(Messages.RESTORE_ERROR_EMAIL_NOT_EXIST)
         }
@@ -97,10 +95,10 @@ class RestoreService(
         return code.toString()
     }
 
-    fun generateMessage(code: String): String{
-        return Messages.RESTORE_CODE_MESSAGE+
+    fun generateMessage(code: String): String {
+        return Messages.RESTORE_CODE_MESSAGE +
                 code + "\n" +
-                Messages.RESTORE_CODE_EXPIRED+
+                Messages.RESTORE_CODE_EXPIRED +
                 Messages.RESTORE_CODE_INFO
     }
 
