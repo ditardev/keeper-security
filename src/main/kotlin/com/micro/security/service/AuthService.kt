@@ -36,11 +36,11 @@ class AuthService(
     fun signIn(signInDto: SignInDto?): AuthDto {
 
         val userEntity = userRepository.findUserByUsername(signInDto?.username)
-            ?: throw ResourceNotFoundException(Messages.USER_WITH_USERNAME + "${signInDto?.username}" + Messages.NOT_FOUND)
+            ?: throw ResourceNotFoundException(Messages.USER_WITH_USERNAME + signInDto?.username + Messages.NOT_FOUND)
 
         when (userEntity.status) {
-            Status.BANNED -> throw ResourceBannedException(Messages.USER_WITH_USERNAME + "${signInDto?.username}" + Messages.BANNED)
-            Status.NEW -> throw ResourceNotConfirmedException(Messages.USER_WITH_USERNAME + "${signInDto?.username}" + Messages.NOT_CONFIRMED)
+            Status.BANNED -> throw ResourceBannedException(Messages.USER_WITH_USERNAME + signInDto?.username + Messages.BANNED)
+            Status.NEW -> throw ResourceNotConfirmedException(Messages.USER_WITH_USERNAME + signInDto?.username + Messages.NOT_CONFIRMED)
             else -> {}
         }
 
@@ -58,10 +58,10 @@ class AuthService(
 
     fun signUp(signUpDto: SignUpDto?): ResponseEntity<*>? {
         if (userRepository.existsByUsername(signUpDto?.username)) {
-            throw ResourceAlreadyExistException(Messages.USER_WITH_USERNAME + "${signUpDto?.username}" + Messages.USERNAME_IN_USE)
+            throw ResourceAlreadyExistException(Messages.USER_WITH_USERNAME + signUpDto?.username + Messages.USERNAME_IN_USE)
         }
         if (userRepository.existsByEmail(signUpDto?.email)) {
-            throw ResourceAlreadyExistException(Messages.USER_WITH_USERNAME + "${signUpDto?.email}" + Messages.EMAIL_IN_USE)
+            throw ResourceAlreadyExistException(Messages.USER_WITH_EMAIL + signUpDto?.email + Messages.EMAIL_IN_USE)
         }
 
         userRepository.save(
@@ -82,7 +82,7 @@ class AuthService(
     fun signOut(userDto: UserDto?): ResponseEntity<*>? {
 
         val userEntity = userRepository.findUserByUsername(userDto?.username)
-            ?: throw ResourceNotFoundException(Messages.USER_WITH_USERNAME + "${userDto?.username}" + Messages.NOT_FOUND)
+            ?: throw ResourceNotFoundException(Messages.USER_WITH_USERNAME + userDto?.username + Messages.NOT_FOUND)
 
         userRepository.delete(userEntity)
 

@@ -18,6 +18,22 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         )
     }
 
+    @ExceptionHandler(ResourceNotConfirmedException::class)
+    fun handleResourceNotConfirmedException(e: ResourceNotConfirmedException): ResponseEntity<ApiResponse.Error> {
+        return ResponseEntity(
+            ApiResponse.Error(status = false, message = e.message),
+            e.httpStatus
+        )
+    }
+
+    @ExceptionHandler(ResoucePasswordIdentical::class)
+    fun handleResoucePasswordIdentical(e: ResoucePasswordIdentical): ResponseEntity<ApiResponse.Error> {
+        return ResponseEntity(
+            ApiResponse.Error(status = false, message = e.message),
+            e.httpStatus
+        )
+    }
+
     @ExceptionHandler(ResourceAlreadyExistException::class)
     fun handleResourceAlreadyExistException(e: ResourceAlreadyExistException): ResponseEntity<ApiResponse.Error> {
         return ResponseEntity(
