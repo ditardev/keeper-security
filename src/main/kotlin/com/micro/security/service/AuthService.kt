@@ -35,18 +35,18 @@ class AuthService(
 ) {
     fun signIn(signInDto: SignInDto?): AuthDto {
 
-        val userEntity = userRepository.findUserByUsername(signInDto?.username)
-            ?: throw ResourceNotFoundException(Messages.USER_WITH_USERNAME + signInDto?.username + Messages.NOT_FOUND)
+        val userEntity = userRepository.findUserEntityByEmail(signInDto?.email)
+            ?: throw ResourceNotFoundException(Messages.USER_WITH_EMAIL + signInDto?.email + Messages.NOT_FOUND)
 
         when (userEntity.status) {
-            Status.BANNED -> throw ResourceBannedException(Messages.USER_WITH_USERNAME + signInDto?.username + Messages.BANNED)
-            Status.NEW -> throw ResourceNotConfirmedException(Messages.USER_WITH_USERNAME + signInDto?.username + Messages.NOT_CONFIRMED)
+            Status.BANNED -> throw ResourceBannedException(Messages.USER_WITH_EMAIL + signInDto?.email + Messages.BANNED)
+            Status.NEW -> throw ResourceNotConfirmedException(Messages.USER_WITH_EMAIL + signInDto?.email + Messages.NOT_CONFIRMED)
             else -> {}
         }
 
         val authentication = authenticationManager.authenticate(
             UsernamePasswordAuthenticationToken(
-                signInDto?.username,
+                signInDto?.email,
                 signInDto?.password
             )
         )

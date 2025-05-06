@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component
 class AuthDetailsService(
     private val userRepository: UserRepository
 ) : UserDetailsService {
-    override fun loadUserByUsername(username: String): UserDetails {
-        val userEntity: UserEntity = userRepository.findUserByUsername(username)
-            ?: throw ResourceNotFoundException(Messages.USER_WITH_USERNAME + " \'" +username + "\' " + Messages.NOT_FOUND)
+    override fun loadUserByUsername(email: String): UserDetails {
+        val userEntity: UserEntity = userRepository.findUserEntityByEmail(email)
+            ?: throw ResourceNotFoundException(Messages.USER_WITH_EMAIL + " \'" +email + "\' " + Messages.NOT_FOUND)
         return SecurityUser.fromUserEntity(userEntity)
     }
 }
