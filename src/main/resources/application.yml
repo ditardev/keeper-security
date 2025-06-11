@@ -24,8 +24,8 @@ spring:
     password: ${server.db.password}
     default-schema: ${server.db.schema}
   instance:
-    status-page-url-path: api/auth/actuator/info
-    health-check-url-path: api/auth/actuator/health
+    status-page-url-path: api/${server.name}/actuator/info
+    health-check-url-path: api/${server.name}/actuator/health
   main:
     allow-bean-definition-overriding: true
   mail:
@@ -51,8 +51,8 @@ eureka:
     service-url:
       default-zone: http://${server.ip}:8761/eureka
   instance:
-    statusPageUrlPath: security/info
-    healthCheckUrlPath: security/health
+    statusPageUrlPath: ${server.name}/info
+    healthCheckUrlPath: ${server.name}/health
     instance-id: "${spring.application.name}:${spring.profiles.active}:${random.uuid}"
     #http://localhost:8080/gateway/info/health
 
@@ -77,7 +77,7 @@ management:
     web:
       exposure:
         include: info, health, metrics, prometheus, loggers
-      base-path: /api/security/info
+      base-path: /api/${server.name}/info
   metrics:
     enable:
       jvm: true
