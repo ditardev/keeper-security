@@ -1,0 +1,16 @@
+name: security-action-process
+env:
+  APPLICATION_NAME : "Keeper-Security"
+on: 
+  push:
+    branches: 
+      - main
+
+jobs:
+  Keeper-security:
+    runs-on: self-hosted
+    
+    steps:
+      - name: PrintAppData
+        run : |
+          echo "Application name2: ${{ env.APPLICATION_NAME}}"
