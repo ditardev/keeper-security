@@ -1,8 +1,8 @@
 server:
   appName: keeper-security-service
   name: auth
-  port: 8090
-  ip: localhost
+  port: 0
+  ip: 192.168.100.8
   endpoint:
     main: api/auth
     user: api/auth/user

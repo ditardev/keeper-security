@@ -35,7 +35,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 
 	//Eureka
-	//implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.2.1")
+	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.2.1")
 
 	//Postgres
 	implementation("org.postgresql:postgresql:42.7.5")
@@ -63,4 +63,10 @@ kotlin {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks {
+	jar {
+		enabled = false
+	}
 }
