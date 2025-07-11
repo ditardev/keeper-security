@@ -26,7 +26,7 @@ class TokenProvider(
     private val header: String? = null,
 
     @Value("\${server.jwt.expiration_jwt}")
-    private val expiration: Long
+    private val expiration: Int
 ) {
 
     private fun getSignInKey(): SecretKey {
@@ -57,7 +57,7 @@ class TokenProvider(
         return Jwts.builder()
             .claims(claims)
             .issuedAt(Date(System.currentTimeMillis()))
-            .expiration(Date(System.currentTimeMillis() + tokenValidity))
+            .expiration(Date(System.currentTimeMillis() + expirationMiliseconds()))
             .signWith(getSignInKey())
             .compact()
     }
@@ -71,11 +71,11 @@ class TokenProvider(
             add("role", userEntity.role)
             add("status", userEntity.status)
         }
-        return generateTokenFromClaims(claims.build(), expiration)
+        return generateTokenFromClaims(claims.build(), expirationMiliseconds())
     }
 
     fun generateRefreshToken(claims: Claims): String {
-        return generateTokenFromClaims(claims, expiration)
+        return generateTokenFromClaims(claims, expirationMiliseconds())
     }
 
     fun validateToken(token: String): Boolean {
@@ -110,5 +110,8 @@ class TokenProvider(
             .build()
             .parseSignedClaims(token)
             ?.payload
+    }
+    fun expirationMiliseconds(): Long {
+        return expiration.toLong() * 60000
     }
 }

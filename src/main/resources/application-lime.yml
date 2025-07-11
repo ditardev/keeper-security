@@ -1,8 +1,8 @@
 server:
   appName: keeper-security-service
   name: auth
-  port: 8090
-  ip: localhost
+  port: 0
+  ip: 192.168.100.8
   endpoint:
     main: api/auth
     user: api/auth/user
@@ -20,7 +20,7 @@ server:
     header: Authorization
     secret: ed53844b521936741d8bda5d4665c68953921cbaa88efde34b2ef89724f6f9d5b2eef2c52be19f4d3ddfd14af6c1109276f6cff8f6ae7eda6edb6f2702d0303f4d57d2d6a90827202e20148aaf0053c0af6276db92fcff43c5c5b70ab247165f56cefa49fcb10ef8c1b56810543d14198119bdf8cba48b29999d577692b79c7b7e36b84ff34a5ff1f80e07da760a5799bf7bc6ba24f21d17f7c02cf74aa1a342e99552ff4811164aeabcf28921b99bec57d9aa0d23cc75cfb78df6aa7ce13610a0be03c8e4a86ab6274ef1883c8d8dc7e060afd66aeea539bd1b128650cbf87d61ffe9af899dc06ccb2cf924de24ebcc4777068b90b06b79b661e0f6cd65e97b886280ff33cbae28f4c9ba1038f52536955e5763da01176e3a95de7a9df33346
     #expiration: 18000 #5h 300m
-    expiration_jwt: 900000 #15m
+    expiration_jwt: 15 #minutes
     expiration_code: 900000
   mail:
     host: smtp.gmail.com

@@ -44,6 +44,7 @@ class AppInfo {
         val builder = StringBuilder()
         builder.append(startDelimiter).append(ln)
         builder.append("Start date time: ").append(Date(contextClosedEvent.timestamp)).append(ln)
+        builder.append("Configuration: ").append(activeProfile).append(ln)
         builder.append(calculateUpTime(contextClosedEvent.timestamp)).append(ln)
         builder.append(stopDelimiter)
         println(builder.toString())
