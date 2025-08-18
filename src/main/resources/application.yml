@@ -45,6 +45,11 @@ spring:
           connectiontimeout: 5000
           timeout: 3000
           writetimeout: 5000
+server:
+  shutdown: graceful
+  servlet:
+    session:
+      timeout: 30s
 #Eureka
 eureka:
   client:
