@@ -1,0 +1,22 @@
+server:
+  appName: keeper-security-service-dev
+  name: auth
+  port: 0
+  ip: 192.168.192.194
+  db:
+    port: 11984
+    name: keeper-postgres-db
+    schema: auth
+    user: ditar
+    password: keeperAdmin1984
+  logging:
+    level: info
+    filePath: ../logs/gateway/gateway.log
+  jwt:
+    header: Authorization
+    secret: proselyte
+    expiration: 900000 #15m
+  mail:
+    host: smtp.gmail.com
+    username: ditartempovich76@gmail.com
+    password: Btwlifygtz15002
