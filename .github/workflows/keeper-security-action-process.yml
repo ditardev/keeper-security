@@ -6,7 +6,7 @@ env:
 on: 
   push:
     branches: 
-      - main
+      - prod
 
 jobs:
   Keeper-security:
